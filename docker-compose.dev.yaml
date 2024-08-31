@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: welcome
+      MARIADB_DATABASE: payment-integration-middleware
+    ports:
+      - 3307:3306
+    volumes:
+      - db-data:/var/lib/mysql:Z
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+
+volumes:
+  db-data:
