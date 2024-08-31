@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\BillState;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\BillCreationRequest;
 use App\Http\Resources\BillResource;
 use App\Models\Bill;
