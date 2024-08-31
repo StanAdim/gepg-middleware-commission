@@ -59,7 +59,7 @@ class CreateAPIUser extends Command
         $this->info("User {$user->name} has been successfully registered with email {$user->email}.");
 
         // Create an API token for the user
-        $token = $user->createToken(TokenNames::BillGeneration->value)->plainTextToken;
+        $token = $user->createToken($email)->plainTextToken;
 
         $this->info("Your API Key is: {$token}");
     }

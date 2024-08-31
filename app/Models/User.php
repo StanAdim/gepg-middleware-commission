@@ -70,6 +70,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $attributes = [
+        'type' => UserType::Normal,
+    ];
+
+
     /**
      * Get the attributes that should be cast.
      *
@@ -82,6 +87,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 
     public static function system(): self
     {
