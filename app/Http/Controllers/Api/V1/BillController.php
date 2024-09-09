@@ -31,37 +31,20 @@ class BillController extends Controller
         $validated = $request->validated();
 
         $bill = Bill::create([
-            'req_id' => Str::uuid(),
-            'sp_code' => $validated['sp_code'],
-            'bill_desc' => $validated['description'],
-            'cust_tin' => $validated['customer']['tin_number'] ?? null,
-            'cust_id' => $validated['customer']['id_number'],
-            'cust_id_typ' => $validated['customer']['id_type'],
-            'cust_name' => $validated['customer']['name'],
-            'cust_cell_num' => $validated['customer']['phone'] ?? null,
-            'cust_email' => $validated['customer']['email'] ?? null,
-            'expires_on' => Carbon::parse($validated['expires_on']),
-            'bill_gen_by' => 'system',
-            'bill_appr_by' => 'system',
-            'bill_amt' => $validated['amount'],
-            'bill_eqv_amt' => $validated['amount'],
-            'ccy' => 'TZS',
-            'state' => BillState::NEW ,
-            'external_callback_url' => $validated['callback_url'],
+            'description' => $validated['description'],
+            'user_id' => $validated['user_id'],
+            'phone_number' => $validated['phone_number'],
+            'customer_name' => $validated['customer_name'],
+            'customer_email' => $validated['customer_email'],
+            'approved_by' => $validated['approved_by'],
+            'amount' => $validated['amount'],
+            'ccy' => $validated['ccy'],
+            'payment_option' => $validated['payment_option'],
+            'status_code' => $validated['status_code'],
+            'expires_at' => Carbon::parse($validated['expires_at']),
+            'payment_order_id' => $validated['payment_order_id'],
+            'callback_url' => $validated['callback_url'],
         ]);
-
-        if ($bill) {
-            foreach ($validated['items'] as $item) {
-                BillItem::create([
-                    'bill_id' => $bill->id,
-                    'sub_sp_code' => $item['sub_sp_code'] ?? $validated['sp_code'],
-                    'gfs_code' => $item['gfs_code'],
-                    'bill_item_ref' => $item['reference'],
-                    'bill_item_amt' => $item['amount'],
-                    'bill_item_eqv_amt' => $item['amount'],
-                ]);
-            }
-        }
 
         return new BillResource($bill);
     }

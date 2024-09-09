@@ -123,4 +123,21 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'gepg' => [
+        'private_key_file' => env('GEPG_PRIVKEY_FILE'),
+        'private_key_passphrase' => env('GEPG_PRIVKEY_PASS'),
+        'public_key_file' => env('GEPG_PUBKEY_FILE'),
+        'public_key_passphrase' => env('GEPG_PUBKEY_PASS'),
+        'base_url' => env('GEPG_BASEURL'),
+        'submission_uri' => env('GEPG_SUBMISSIONURI'),
+        'cancellation_uri' => env('GEPG_CANCELLATION_URI'),
+        'reconciliation_uri' => env('GEPG_RECONCILIATION_URI'),
+        'sp_code' => env('GEPG_SPCODE'),
+        'sub_sp_code' => env('GEPG_SUBSPCODE'),
+        'sp_grp_code' => env('GEPG_SPGRPCODE'),
+        'gfs_code' => env('GEPG_GFSCODE'),
+        'system_id' => env('GEPG_SYSTEMID'),
+        'collection_cent_code' => env('GEPG_COLLECTIONCENCODE'),
+    ],
+
 ];
