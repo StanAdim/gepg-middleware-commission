@@ -267,7 +267,7 @@ class GeneralCustomHelper
         }
     }
 
-    public static function signedPayemtAck($ReqId, $statusCode)
+    public static function signedPaymentAck($ReqId, $statusCode)
     {
         $PRIVATE_KEY = config('app.gepg.private_key_file');
         $KEY_PASSWORD = config('app.gepg.private_key_passphrase');
