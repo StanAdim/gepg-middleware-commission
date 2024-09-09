@@ -2,26 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Enums\BillState;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BillCreationRequest;
 use App\Http\Resources\BillResource;
 use App\Models\Bill;
-use App\Models\BillItem;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Str;
 
 class BillController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -49,27 +37,4 @@ class BillController extends Controller
         return new BillResource($bill);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
