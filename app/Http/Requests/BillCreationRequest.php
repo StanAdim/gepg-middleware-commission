@@ -24,7 +24,7 @@ class BillCreationRequest extends FormRequest
         return [
             'uuid' => 'required|uuid',
             'description' => 'required|string',
-            'phone_number' => 'required|string|max:14',
+            'phone_number' => 'required|string|max:20',
             'customer_name' => 'required|string|max:200',
             'customer_email' => 'required|email|max:46',
             'approved_by' => 'required|string',

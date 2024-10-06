@@ -24,7 +24,7 @@ class NotifySystemOnPaymentStatusUpdate implements ShouldQueue
     {
         Http::system()
             ->post(
-                config('app.system.paymentNotificationPath'),
+                config('app.system.paymentNotificationPath') . "/{$event->bill->payment_order_id}",
                 [
                     'message' => 'Updated Payment Status',
                     'control_number' => $event->bill->customer_cntr_num,

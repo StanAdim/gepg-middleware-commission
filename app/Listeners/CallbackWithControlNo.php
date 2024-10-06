@@ -25,7 +25,7 @@ class CallbackWithControlNo implements ShouldQueue
     {
         Http::system()
             ->post(
-                config('app.system.controlNoUpdatePath'),
+                config('app.system.controlNoUpdatePath') . "/{$event->bill->payment_order_id}",
                 [
                     'message' => 'Updated Control Number',
                     'control_number' => $event->bill->customer_cntr_num,

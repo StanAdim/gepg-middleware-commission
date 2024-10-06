@@ -42,7 +42,15 @@ class GenerateUserAPIToken extends Command
             return;
         }
 
-        $token = $user->createToken($email)->plainTextToken;
+        $tokenAbilities = $this->choice(
+            'Select the token abilities',
+            User::getAbilityChoices(),
+            0,
+            null,
+            true,
+        );
+
+        $token = $user->createToken($email, $tokenAbilities)->plainTextToken;
 
         $this->info("Your new token is: $token");
 
