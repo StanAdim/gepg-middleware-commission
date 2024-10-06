@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Http::macro('system', function () {
+            $headers = [
+                'Authorization' => 'Bearer ' . config('app.system.authenticationToken'),
+            ];
+
+            return Http::withHeaders($headers)
+                ->acceptJson()
+                ->baseUrl(config('app.system.baseUrl'));
+        });
     }
 }

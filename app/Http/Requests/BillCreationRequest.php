@@ -22,8 +22,8 @@ class BillCreationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'uuid' => 'required|uuid',
             'description' => 'required|string',
-            'user_id' => 'required|integer',
             'phone_number' => 'required|string|max:14',
             'customer_name' => 'required|string|max:200',
             'customer_email' => 'required|email|max:46',
@@ -33,8 +33,6 @@ class BillCreationRequest extends FormRequest
             'payment_option' => 'required|numeric',
             'status_code' => 'required|numeric',
             'expires_at' => 'required|date',
-            'payment_order_id' => 'required|numeric',
-            'callback_url' => 'required|url',
         ];
     }
 }

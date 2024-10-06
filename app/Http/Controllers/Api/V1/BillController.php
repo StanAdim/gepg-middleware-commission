@@ -20,7 +20,7 @@ class BillController extends Controller
 
         $bill = Bill::create([
             'description' => $validated['description'],
-            'user_id' => $validated['user_id'],
+            'user_id' => auth()->user()->getAuthIdentifier(),
             'phone_number' => $validated['phone_number'],
             'customer_name' => $validated['customer_name'],
             'customer_email' => $validated['customer_email'],
@@ -30,8 +30,7 @@ class BillController extends Controller
             'payment_option' => $validated['payment_option'],
             'status_code' => $validated['status_code'],
             'expires_at' => Carbon::parse($validated['expires_at']),
-            'payment_order_id' => $validated['payment_order_id'],
-            'callback_url' => $validated['callback_url'],
+            'payment_order_id' => $validated['uuid'],
         ]);
 
         return new BillResource($bill);

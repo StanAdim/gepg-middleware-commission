@@ -44,6 +44,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const string ABILITY_UPDATE_BILLING_INFO = 'update-billing-info';
+    const string ABILITY_UPDATE_GEPG_INFO = 'update-gepg-info';
+
     protected $casts = [
         'type' => UserType::class,
     ];
@@ -93,4 +96,13 @@ class User extends Authenticatable
     {
         return self::where('type', UserType::System)->first();
     }
+
+    public static function getAbilityChoices(): array
+    {
+        return [
+            self::ABILITY_UPDATE_BILLING_INFO,
+            self::ABILITY_UPDATE_GEPG_INFO,
+        ];
+    }
+
 }

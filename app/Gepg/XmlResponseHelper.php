@@ -4,6 +4,7 @@ namespace App\Gepg;
 
 use App\Enums\GEPGResponseCodes;
 use App\Events\ControlNoResponseReceived;
+use App\Events\PaymentStatusUpdated;
 use App\Models\Bill;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
@@ -35,7 +36,7 @@ class XmlResponseHelper
                     $cust_cntr_num = $gepg_response['CustCntrNum'];
                     $theBill->status_code = $BillStsCode;
                     $theBill->status_description = $BillStsDesc;
-                    $theBill->cust_cntr_num = $cust_cntr_num;
+                    $theBill->customer_cntr_num = $cust_cntr_num;
                 } else {
                     // "UPDATE billing SET gepgstatus='$ResStsCode' WHERE billid='$billid'");
                     $theBill->status_code = $BillStsCode;
@@ -109,6 +110,9 @@ class XmlResponseHelper
                 $theBill->save();
                 // Signing response
                 Log::info("### Payment Updated For Bill ID: ", ['Bill ID' => $BillId]);
+
+                PaymentStatusUpdated::dispatch($theBill);
+
                 return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::SUCCESSFUL);
                 // Log::info('RECPAY-GEPG-RESPONSE', [$response, $serial, 'GEPG']);
             } else {
@@ -149,7 +153,7 @@ class XmlResponseHelper
                     $theBill->status_code = $ResStsCode;
                     $theBill->paid_date = $date;
                     $theBill->sp_code = $responseHeader['SpCode'];
-                    $theBill->cust_cntr_num = $paymentItem['CustCntrNum'];
+                    $theBill->customer_cntr_num = $paymentItem['CustCntrNum'];
                     $theBill->GrpBillId = $paymentItem['GrpBillId'];
                     $theBill->SpGrpCode = $paymentItem['SpGrpCode'];
                     $theBill->psp_code = $paymentItem['PspCode'];

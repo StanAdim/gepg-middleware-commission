@@ -7,15 +7,16 @@ use App\Enums\UserType;
 use App\Models\User;
 use Hash;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
 
-class CreateAPIUser extends Command
+class CreateAPIUser extends Command implements PromptsForMissingInput
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:create-api-user {name} {email} {password}';
+    protected $signature = 'app:create-api-user {name} {email}';
 
     /**
      * The console command description.
@@ -31,7 +32,6 @@ class CreateAPIUser extends Command
     {
         $name = $this->argument('name');
         $email = $this->argument('email');
-        $password = $this->argument('password');
 
         // Validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -44,6 +44,8 @@ class CreateAPIUser extends Command
             $this->error('User with this email already exists.');
             return;
         }
+
+        $password = $this->secret('password');
 
         /**
          * Create the user
@@ -58,9 +60,18 @@ class CreateAPIUser extends Command
 
         $this->info("User {$user->name} has been successfully registered with email {$user->email}.");
 
-        // Create an API token for the user
-        $token = $user->createToken($email)->plainTextToken;
+        $tokenAbilities = $this->choice(
+            'Select the token abilities',
+            User::getAbilityChoices(),
+            0,
+            null,
+            true,
+        );
 
-        $this->info("Your API Key is: {$token}");
+        // Create an API token for the user
+        $token = $user->createToken($email, $tokenAbilities)->plainTextToken;
+
+        $tokenAbilities = implode(', ', $tokenAbilities);
+        $this->info("Your API Key is: {$token}\n\tAbilities: {$tokenAbilities}");
     }
 }

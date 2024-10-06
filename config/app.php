@@ -139,5 +139,10 @@ return [
         'system_id' => env('GEPG_SYSTEMID'),
         'collection_cent_code' => env('GEPG_COLLECTIONCENCODE'),
     ],
-
+    'system' => [
+        'authenticationToken' => env('SYSTEM_AUTHENTICATION_TOKEN'),
+        'baseUrl' => env('SYSTEM_BASE_URL'),
+        'controlNoUpdatePath' => env('SYSTEM_CONTROL_NO_UPDATE_PATH'),
+        'paymentNotificationPath' => env('SYSTEM_PAYMENT_NOTIFICATION_PATH'),
+    ],
 ];

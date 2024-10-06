@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\ControlNoResponseReceived;
-use App\Http\Resources\BillResource;
-use Http;
+use App\Events\PaymentStatusUpdated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Http;
 
-class CallbackWithControlNo implements ShouldQueue
+class NotifySystemOnPaymentStatusUpdate implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -21,14 +20,16 @@ class CallbackWithControlNo implements ShouldQueue
     /**
      * Handle the event.
      */
-    public function handle(ControlNoResponseReceived $event): void
+    public function handle(PaymentStatusUpdated $event): void
     {
         Http::system()
             ->post(
-                config('app.system.controlNoUpdatePath'),
+                config('app.system.paymentNotificationPath'),
                 [
-                    'message' => 'Updated Control Number',
+                    'message' => 'Updated Payment Status',
                     'control_number' => $event->bill->customer_cntr_num,
+                    'status' => 1,
+                    'paid_amount' => $event->bill->paid_amt,
                 ]
             );
     }

@@ -23,8 +23,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $payment_option
  * @property string $expires_at
  * @property string $status_code
+ * @property string|null $status_description
  * @property string|null $paid_date
  * @property string|null $sp_code
+ * @property int|null $entry_cnt
  * @property string|null $customer_cntr_num
  * @property string|null $GrpBillId
  * @property string|null $SpGrpCode
@@ -34,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $pay_ref_id
  * @property string|null $bill_amt
  * @property string|null $paid_amt
+ * @property string|null $bill_pay_opt
  * @property string|null $coll_acc_num
  * @property string|null $trx_dt_tm
  * @property string|null $usd_pay_chnl
@@ -45,19 +48,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $rsv2
  * @property string|null $rsv3
  * @property int $status
- * @property int $payment_order_id
+ * @property string|null $ReqId
+ * @property string|null $ack_id
+ * @property string $payment_order_id
  * @property string|null $request_content
- * @property string|null $callback_url
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property BillState $state
  * @method static \Illuminate\Database\Eloquent\Builder|Bill newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bill newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bill query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Bill whereAckId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereApprovedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereBillAmt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCallbackUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Bill whereBillPayOpt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCcy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCollAccNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCreatedAt($value)
@@ -65,6 +69,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCustomerEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereCustomerName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Bill whereEntryCnt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereExpiresAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereGrpBillId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereId($value)
@@ -79,6 +84,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Bill wherePyrCellNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill wherePyrEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill wherePyrName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Bill whereReqId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereRequestContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereRsv1($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereRsv2($value)
@@ -87,6 +93,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereSpGrpCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereStatusCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Bill whereStatusDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereTrdPtyTrxId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereTrxDtTm($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bill whereTrxId($value)
@@ -141,7 +148,6 @@ class Bill extends Model
         'payment_order_id',
         'request_content',
         'expires_at',
-        'callback_url',
     ];
 
     /**

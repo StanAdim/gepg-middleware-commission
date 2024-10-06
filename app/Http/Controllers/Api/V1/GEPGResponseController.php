@@ -6,7 +6,6 @@ use App\Gepg\XmlResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Log;
-use Whoops\Handler\XmlResponseHandler;
 
 class GEPGResponseController extends Controller
 {
@@ -21,7 +20,7 @@ class GEPGResponseController extends Controller
         try {
             // Get raw XML data from the request
             $xmlContent = $request->getContent();
-            return XmlResponseHandler::${$handler}($xmlContent);
+            return XmlResponseHelper::${$handler}($xmlContent);
 
         } catch (\Exception $e) {
             // Log the error and return a response
