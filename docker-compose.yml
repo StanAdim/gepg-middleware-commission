@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+    app: &base
+        build: .
+        container_name: gepg-payment-middleware
+        working_dir: /var/www/html
+        ports:
+            - 2021:80
+        volumes:
+            - storage:/var/www/html/storage:rw
+            - .env:/var/www/html/.env:rw
+
+        user: ${CURRENT_UID}
+        env_file:
+            - ".env"
+        networks:
+            - gepg-payment-middleware-net
+        depends_on:
+            - db
+        healthcheck:
+            test: [ "CMD", "curl", "-f", "https://events.ictc.go.tz" ]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+    queue:
+        <<: *base
+        container_name: gepg-payment-middleware-queue
+        command: php artisan queue:work --queue=default
+        ports: []
+
+    db:
+        image: mariadb:10.6.18
+        container_name: gepg-payment-middleware-db
+        restart: unless-stopped
+        env_file:
+            - ".env"
+        environment:
+            MARIADB_DATABASE: ${DB_DATABASE}
+            # MARIADB_USER: ${DB_USERNAME}
+            # MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+        # ports:
+        #     - 1702:${DB_PORT}
+        networks:
+            - gepg-payment-middleware-net
+        volumes:
+            - mariadbdata:/var/lib/mysql
+        healthcheck:
+            test: [ "CMD-SHELL", "mysqladmin ping -h localhost -u$DB_USERNAME --password=$DB_PASSWORD" ]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+
+    adminer:
+        image: adminer
+        restart: always
+        networks:
+            - gepg-payment-middleware-net
+        ports:
+            - 8082:8080
+
+volumes:
+    mariadbdata:
+        driver: local
+    storagedata:
+        driver: local
+
+networks:
+    gepg-payment-middleware-net:
+        driver: bridge
