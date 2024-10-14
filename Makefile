@@ -1,5 +1,5 @@
 setup:
-	@git clone git@github.com:Apropriare/gepg-integration-middleware.git code
+	@git clone git@github.com-gepg-integration-middleware:Apropriare/gepg-integration-middleware.git code
 	@make update
 	@make migrate
 	@make filamentuser
@@ -15,26 +15,26 @@ up:
 	docker compose up --force-recreate --build -d
 
 boost:
-	docker exec gepg-payment-middleware -c "php artisan config:clear"
-	docker exec gepg-payment-middleware bash -c "php artisan config:cache"
+	docker-compose exec app bash -c "php artisan config:clear"
+	docker-compose exec app bash -c "php artisan config:cache"
 
 stop:
 	docker compose stop
 
 migrate:
-	docker exec gepg-payment-middleware bash -c "php artisan migrate"
+	docker-compose exec app bash -c "php artisan migrate"
 
 start:
 	docker compose restart
 
 logs:
-	docker logs -f gepg-payment-middleware
+	docker-compose logs -f app
 
 bash:
-	docker exec -it gepg-payment-middleware bash
+	docker-compose exec app bash
 
 filamentuser:
-	docker exec -it gepg-payment-middleware php artisan make:filament-user
+	docker-compose exec app php artisan make:filament-user
 
 superadmin:
-	docker exec -it gepg-payment-middleware php artisan shield:super-admin
+	docker-compose exec app php artisan shield:super-admin
