@@ -113,6 +113,7 @@ class XmlRequestHelper
 
                 } else {
                     Log::info("No result Returned\n");
+                    throw new Exception("No result Returned from $requestUri with payload: $signedPayload");
                 }
             } else {
                 Log::error("\n\n------Error: Unable to read the cert store.\n");
@@ -177,6 +178,7 @@ class XmlRequestHelper
                     return GeneralCustomHelper::isVerifyPayload($vdata, $vsignature);
                 } else {
                     Log::info("No result Returned" . "\n");
+                    throw new Exception("No result Returned from $requestUri with payload: $signedPayload");
                 }
             } else {
                 Log::error("\n\n------Error: Unable to read the cert store.\n");
@@ -236,6 +238,7 @@ class XmlRequestHelper
                     return GeneralCustomHelper::isVerifyPayload($vdata, $vsignature);
                 } else {
                     Log::info("No result Returned" . "\n");
+                    throw new Exception("No result Returned from $requestUri with payload: $signedPayload");
                 }
             } else {
                 Log::error("\n\n------Error: Unable to read the cert store.\n");
