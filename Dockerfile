@@ -45,6 +45,22 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 COPY package-lock.json package.json ./
 RUN npm install
 
+# Comment out the [openssl_init] section in the OpenSSL configuration file
+RUN sed -i 's/^\[openssl_init\]/#&/' /etc/ssl/openssl.cnf
+
+# Add the providers section or any other modifications as needed
+RUN echo "\n\
+    # Adding the provider_sect\n\
+    [provider_sect]\n\
+    default = default_sect\n\
+    legacy = legacy_sect\n\
+    \n\
+    [default_sect]\n\
+    activate = 1\n\
+    \n\
+    [legacy_sect]\n\
+    activate = 1\n" >> /etc/ssl/openssl.cnf
+
 # Copy existing application code to the container
 COPY --chown=www-data:www-data . .
 
