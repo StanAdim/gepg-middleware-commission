@@ -18,16 +18,21 @@ Route::prefix('v1')->group(function () {
             Route::post('', 'store');
         });
 
-    Route::prefix('bill')
+    /* Route::prefix('bill')
         ->controller(GEPGResponseController::class)
         ->middleware(['auth:sanctum', 'ability:' . User::ABILITY_UPDATE_GEPG_INFO])
         ->group(function () {
             Route::post('receive-controll', 'controlNoResponse');
             Route::post('receive-payment', 'paymentReceipt');
             Route::post('reconciliation-response', 'reconcileReceipt');
-        });
+        }); */
 
-    /*  Route::resource('bill', BillController::class)
-         ->middleware('auth:sanctum'); */
 });
 
+Route::prefix('bill')
+    ->controller(GEPGResponseController::class)
+    ->group(function () {
+        Route::post('receive-controll', 'controlNoResponse');
+        Route::post('receive-payment', 'paymentReceipt');
+        Route::post('reconciliation-response', 'reconcileReceipt');
+    });

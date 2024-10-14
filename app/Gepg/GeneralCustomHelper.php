@@ -3,6 +3,7 @@
 namespace App\Gepg;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class GeneralCustomHelper
@@ -53,8 +54,7 @@ class GeneralCustomHelper
         $gepgPublicCertificate = config('app.gepg.public_key_file');
         //Get Certificate contents
         if (!$pcert_store = file_get_contents($gepgPublicCertificate)) {
-            Log::info("---Error: Unable to read the cert file\n");
-            return;
+            throw new Exception("---Error: Unable to read the cert file\n");
         } else {
             //Read Certificate
             if (openssl_pkcs12_read($pcert_store, $pcert_info, $gepgPublicKeyPass)) {
@@ -71,8 +71,10 @@ class GeneralCustomHelper
                 } elseif ($ok == 0) {
                     Log::info("---- Signature Status: BAD");
                     $verified_data = [];
+                    throw new Exception("Signature Status: BAD");
                 } else {
                     Log::info("Signature Status: UGLY, Error checking signature:");
+                    throw new Exception("Signature Status: UGLY, Error checking signature");
                 }
                 Log::info("---- End Verification ---");
                 return $verified_data;
