@@ -20,7 +20,7 @@ class GEPGResponseController extends Controller
         try {
             // Get raw XML data from the request
             $xmlContent = $request->getContent();
-            return XmlResponseHelper::${$handler}($xmlContent);
+            return XmlResponseHelper::$handler($xmlContent);
 
         } catch (\Exception $e) {
             // Log the error and return a response
