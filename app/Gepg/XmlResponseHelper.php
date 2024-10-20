@@ -50,7 +50,7 @@ class XmlResponseHelper
                 ControlNoResponseReceived::dispatch($theBill);
 
                 // Signing response
-                return GeneralCustomHelper::signedBillAck($gepg_response['ResId'], GEPGResponseCodes::SUCCESSFUL);
+                return GeneralCustomHelper::signedBillAck($gepg_response['ResId'], GEPGResponseCodes::SUCCESSFUL->value);
                 // Log::info('RECPAY-GEPG-RESPONSE', [$response, $serial, 'GEPG']);
             }
 
@@ -59,7 +59,7 @@ class XmlResponseHelper
             echo "Error occurred: " . $e->getMessage();
             // Optionally, log the error
             Log::error('Database query error', ['exception' => $e]);
-            return GeneralCustomHelper::signedBillAck($gepg_response['ResId'], GEPGResponseCodes::INVALID_SIGNATURE);
+            return GeneralCustomHelper::signedBillAck($gepg_response['ResId'], GEPGResponseCodes::INVALID_SIGNATURE->value);
         }
         Log::info("----- END CONTROL NUMBER   RESPONSE -----\n");
 
@@ -113,11 +113,11 @@ class XmlResponseHelper
 
                 PaymentStatusUpdated::dispatch($theBill);
 
-                return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::SUCCESSFUL);
+                return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::SUCCESSFUL->value);
                 // Log::info('RECPAY-GEPG-RESPONSE', [$response, $serial, 'GEPG']);
             } else {
                 Log::info("-------- Bill Not Found");
-                return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::INVALID_SIGNATURE);
+                return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::INVALID_SIGNATURE->value);
             }
 
         } catch (QueryException $e) {
@@ -125,7 +125,7 @@ class XmlResponseHelper
             echo "Error occurred: " . $e->getMessage();
             // Optionally, log the error
             Log::error('Database query error', ['exception' => $e]);
-            return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::INVALID_SIGNATURE);
+            return GeneralCustomHelper::signedPaymentAck($gepg_pay_res['ReqId'], GEPGResponseCodes::INVALID_SIGNATURE->value);
         }
     }
 
@@ -179,12 +179,12 @@ class XmlResponseHelper
                     // Signing response
                     Log::info("** Payment Updated \n");
                     Log::info("----- END RECONCILIATION RESPONSE -----\n");
-                    return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::SUCCESSFUL);
+                    return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::SUCCESSFUL->value);
                     // Log::info('RECPAY-GEPG-RESPONSE', [$response, $serial, 'GEPG']);
                 } else {
                     Log::info("-------- ### Bill Not Found \n");
                     Log::info("----- END RECONCILIATION RESPONSE -----\n");
-                    return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::INVALID_SIGNATURE);
+                    return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::INVALID_SIGNATURE->value);
                 }
             }
 
@@ -194,7 +194,7 @@ class XmlResponseHelper
             // Optionally, log the error
             Log::error('Database query error', ['exception' => $e]);
             Log::info("----- END RECONCILIATION RESPONSE -----\n");
-            return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::INVALID_SIGNATURE);
+            return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::INVALID_SIGNATURE->value);
         }
 
     }
