@@ -156,6 +156,6 @@ class Bill extends Model
      * @var array<string, string>
      */
     protected $dispatchesEvents = [
-        'saved' => BillCreated::class,
+        'created' => BillCreated::class,
     ];
 }
