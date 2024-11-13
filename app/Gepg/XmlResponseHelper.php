@@ -179,6 +179,9 @@ class XmlResponseHelper
                     // Signing response
                     Log::info("** Payment Updated \n");
                     Log::info("----- END RECONCILIATION RESPONSE -----\n");
+
+                    PaymentStatusUpdated::dispatch($theBill);
+
                     return GeneralCustomHelper::signedReconcileAck($responseHeader['ResId'], GEPGResponseCodes::SUCCESSFUL->value);
                     // Log::info('RECPAY-GEPG-RESPONSE', [$response, $serial, 'GEPG']);
                 } else {

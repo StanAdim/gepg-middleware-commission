@@ -23,10 +23,17 @@ services:
             interval: 30s
             timeout: 10s
             retries: 3
+
     queue:
         <<: *base
         container_name: gepg-payment-middleware-queue
         command: php artisan queue:work --queue=default
+        ports: []
+
+    schedule:
+        <<: *base
+        container_name: gepg-payment-middleware-schedule
+        command: php artisan schedule:work --run-output-file=storage/logs/schedule.log
         ports: []
 
     db:

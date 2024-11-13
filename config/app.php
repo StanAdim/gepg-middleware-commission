@@ -144,5 +144,7 @@ return [
         'baseUrl' => env('SYSTEM_BASE_URL'),
         'controlNoUpdatePath' => env('SYSTEM_CONTROL_NO_UPDATE_PATH'),
         'paymentNotificationPath' => env('SYSTEM_PAYMENT_NOTIFICATION_PATH'),
+        'reconciliationStart' => env('SYSTEM_RECONCILIATION_START', "06:00"),
+        'reconciliationEnd' => env('SYSTEM_RECONCILIATION_END', "23:59"),
     ],
 ];
