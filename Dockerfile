@@ -52,7 +52,7 @@ RUN sed -i 's/^\[openssl_init\]/#&/' /etc/ssl/openssl.cnf
 COPY --chown=www-data:www-data . .
 
 # Add the providers section or any other modifications as needed
-#RUN cat openssl.cnf >> /etc/ssl/openssl.cnf
+RUN cat openssl.cnf >> /etc/ssl/openssl.cnf
 
 USER www-data
 
