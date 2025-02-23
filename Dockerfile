@@ -61,7 +61,7 @@ RUN chown -R www-data:www-data public
 RUN cat openssl.cnf >> /etc/ssl/openssl.cnf
 
 # Run as www-data
-USER www-data
+#USER www-data
 
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=ext-exif --ignore-platform-req=ext-exif --ignore-platform-req=ext-exif
 RUN npm run build
