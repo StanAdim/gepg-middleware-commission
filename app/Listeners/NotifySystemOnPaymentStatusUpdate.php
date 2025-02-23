@@ -30,6 +30,7 @@ class NotifySystemOnPaymentStatusUpdate implements ShouldQueue
                     'control_number' => $event->bill->customer_cntr_num,
                     'status' => 1,
                     'paid_amount' => $event->bill->paid_amt,
+                    'data' => $event->bill->toJson(),
                 ]
             );
     }

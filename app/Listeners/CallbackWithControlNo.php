@@ -29,6 +29,7 @@ class CallbackWithControlNo implements ShouldQueue
                 [
                     'message' => 'Updated Control Number',
                     'control_number' => $event->bill->customer_cntr_num,
+                    'data' => $event->bill->toJson(),
                 ]
             );
     }
