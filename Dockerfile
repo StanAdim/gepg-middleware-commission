@@ -56,6 +56,8 @@ COPY default-apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Limit access to public directory only to www-data
 RUN chown -R www-data:www-data public
+RUN chown -R www-data:www-data bootstrap/cache
+RUN chown -R www-data:www-data storage
 
 # Add the providers section or any other modifications as needed
 RUN cat openssl.cnf >> /etc/ssl/openssl.cnf
