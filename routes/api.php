@@ -29,7 +29,7 @@ Route::prefix('v1')->group(function () {
 
 });
 Route::get('/test', function (Request $request) {
-    return 'Hello Api is Live!'. $request->name;
+    return 'Yes!, API is Live!'. $request->name;
 });
 Route::prefix('bill')
     ->controller(GEPGResponseController::class)
